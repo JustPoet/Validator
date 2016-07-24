@@ -1,31 +1,75 @@
 <?php
+/*
+ * This file is part of the andy/validator.
+ *
+ * (c) zhengzean <andyzheng1024@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+/**
+ * Validator.php.
+ *
+ * @author    zhengzean <andyzheng1024@gmail.com>
+ * @copyright 2016 zhengzean <andyzheng1024@gmail.com>
+ *
+ * @link      https://github.com/ZhengZean
+ */
 namespace Andy\Validator;
 
 use Closure;
 
 /**
+ * Class Validator
  *
+ * @package Andy\Validator
  */
 class Validator
 {
+    /**
+     * @var array
+     */
     protected $data;
 
+    /**
+     * @var array
+     */
     protected $rules;
 
+    /**
+     * @var array
+     */
     protected $expectedRules;
 
+    /**
+     * Validator constructor.
+     *
+     * @param array $data
+     * @param array $rules
+     */
     public function __construct(array $data, array $rules)
     {
         $this->data = $data;
         $this->rules = $rules;
     }
 
+    /**
+     * @param array $data
+     * @param array $rules
+     *
+     * @return array
+     */
     public static function validate(array $data, array $rules)
     {
         $validator = new self($data, $rules);
+
         return $validator->doValidate();
     }
 
+    /**
+     * @return array
+     */
     protected function doValidate()
     {
         $this->analysisRules();
@@ -42,6 +86,7 @@ class Validator
                 }
             }
         }
+
         return $result;
     }
 
@@ -77,6 +122,7 @@ class Validator
         if (empty($data[$key])) {
             return false;
         }
+
         return true;
     }
 
@@ -90,6 +136,7 @@ class Validator
                 return true;
             }
         }
+
         return false;
     }
 }
