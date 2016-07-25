@@ -1,3 +1,5 @@
 /vendor/
 .idea
 .gitignore
+/tests
+phpunit.xml.dist
