@@ -43,6 +43,11 @@ class Validator
     protected $expectedRules;
 
     /**
+     * @var array
+     */
+    protected $defaultFilter = ['required', 'length'];
+
+    /**
      * Validator constructor.
      *
      * @param array $data
@@ -105,6 +110,9 @@ class Validator
                         continue;
                     }
                     $detail = explode(':', $item);
+                    if (!in_array($detail[0], $this->defaultFilter)){
+                        continue;
+                    }
                     $this->expectedRules[$key][] = [
                         'filter' => $detail[0],
                         'params' => empty($detail[1]) ? [] : explode(',', $detail[1])
