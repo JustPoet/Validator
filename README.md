@@ -5,7 +5,7 @@
 
 ```php
 <?php
-use Andy\Validator\Validator;
+use Zean\Validator\Validator;
 
 $rules = [
     'name' => 'required|length:2,5',
