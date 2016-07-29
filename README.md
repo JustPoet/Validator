@@ -1,7 +1,14 @@
 # Validator
 一个简洁的校验器,通过传入数组参数和校验规则,即可得出其中的问题字段
 
-使用
+### 安装
+
+```shell
+composer require zean/validator
+```
+
+### 使用
+
 
 ```php
 <?php
