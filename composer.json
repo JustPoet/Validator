@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Andy\\Validator\\": "src/Validator/"
+            "Zean\\Validator\\": "src/Validator/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Andy\\Validator\\Tests\\": "tests/"
+            "Zean\\Validator\\Tests\\": "tests/"
         }
     }
 }

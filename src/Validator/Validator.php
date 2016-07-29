@@ -16,14 +16,14 @@
  *
  * @link      https://github.com/ZhengZean
  */
-namespace Andy\Validator;
+namespace Zean\Validator;
 
 use Closure;
 
 /**
  * Class Validator
  *
- * @package Andy\Validator
+ * @package Zean\Validator
  */
 class Validator
 {
