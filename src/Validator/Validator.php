@@ -62,14 +62,23 @@ class Validator
     /**
      * @param array $data
      * @param array $rules
+     * @param bool  $summary
      *
      * @return array
      */
-    public static function validate(array $data, array $rules)
+    public static function validate(array $data, array $rules, bool $summary = false)
     {
         $validator = new self($data, $rules);
-
-        return $validator->doValidate();
+        $result = $validator->doValidate();
+        if ($summary) {
+            $summaryResult = true;
+            foreach ($result as $key => $value) {
+                $summaryResult = $summaryResult && $value;
+            }
+            return $summaryResult;
+        } else {
+            return $result;
+        }
     }
 
     /**
@@ -81,9 +90,15 @@ class Validator
         $result = [];
         foreach ($this->expectedRules as $key => $ruleArray) {
             $result[$key] = true;
+            if (!isset($this->data[$key])) {
+                $result[$key] = false;
+                continue;
+            }
             foreach ($ruleArray as $rule) {
                 if ($rule['filter'] instanceof Closure) {
                     $result[$key] = $result[$key] && $rule['filter']($this->data[$key]);
+                } elseif (!in_array($rule['filter'], $this->defaultFilter)) {
+                    $result[$key] = $result[$key] && preg_match($rule['filter'], $this->data[$key]);
                 } else {
                     $filter = $rule['filter'];
                     $params = $rule['params'];
@@ -110,9 +125,6 @@ class Validator
                         continue;
                     }
                     $detail = explode(':', $item);
-                    if (!in_array($detail[0], $this->defaultFilter)){
-                        continue;
-                    }
                     $this->expectedRules[$key][] = [
                         'filter' => $detail[0],
                         'params' => empty($detail[1]) ? [] : explode(',', $detail[1])
